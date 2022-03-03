@@ -1,1 +1,1 @@
-g++ src/main.cpp src/sudoku.cpp -o src/main.out && ./src/main.out
+g++ -std=c++17 src/main.cpp src/sudoku.cpp -o src/main.out && ./src/main.out

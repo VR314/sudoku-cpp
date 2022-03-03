@@ -3,6 +3,8 @@
 #include <iostream>
 using namespace std;
 
+// sudoku text files source: http://lipas.uwasa.fi/~timan/sudoku/
+
 // pass by reference: void f(int (&array)[rows][cols]), access as `array`, call
 // as f(array)
 // pass by pointer: void f(int (*array)[5][10]), access as
@@ -14,7 +16,7 @@ int testApply(int i, int j, sudoku_board b) {
 }
 
 int main() {
-  Sudoku s = Sudoku();
-  s.iterateAndApply(testApply);
+  Sudoku s = Sudoku("sudokus/test.in");
+  s.printBoard();
   return 0;
 }

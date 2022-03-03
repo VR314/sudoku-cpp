@@ -6,7 +6,7 @@
     "request": "launch",
     "name": "Launch Program",
     "target": "./src/main.out",
-    "cwd": "${workspaceRoot}",
+    "cwd": "${workspaceFolder}",
     "valuesFormatting": "parseText"
   },
   ]
