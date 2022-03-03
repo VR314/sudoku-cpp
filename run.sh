@@ -1,2 +1,1 @@
-g++ src/main.cpp -o src/main.out
-./src/main.out
+g++ src/main.cpp src/sudoku.cpp -o src/main.out && ./src/main.out

@@ -1,5 +1,6 @@
-#include <iostream>
+#include "sudoku.h"
 #include <functional>
+#include <iostream>
 using namespace std;
 
 // pass by reference: void f(int (&array)[rows][cols]), access as `array`, call
@@ -7,48 +8,13 @@ using namespace std;
 // pass by pointer: void f(int (*array)[5][10]), access as
 // `(*array)[i][j]`, call as f(&array)
 
-void printByReference(int (&array)[9][9]) {
-  for (int i = 0; i < 9; i++) {
-    for (int j = 0; j < 9; j++) {
-      array[i][j] = 0;
-      cout << "x[" << i << "][" << j << "]: ";
-      cout << array[i][j] << endl;
-    }
-  }
+int testApply(int i, int j, sudoku_board b) {
+  cout << i << " " << j << "  " << b[i][j] << endl;
+  return 0;
 }
-
-void printByPointer(int (*array)[9][9]) {
-  for (int i = 0; i < 9; i++) {
-    for (int j = 0; j < 9; j++) {
-      (*array)[i][j] = 0;
-      cout << "x[" << i << "][" << j << "]: ";
-      cout << (*array)[i][j] << endl;
-    }
-  }
-}
-
-void fillWithZeroes(int (*array)[9][9]) {
-  for (int i = 0; i < 9; i++) {
-    for (int j = 0; j < 9; j++) {
-      (*array)[i][j] = 0;
-    }
-  }
-}
-
-void iterateAndApply(int (*array)[9][9],
-                     int (*func)(int, int, int (*array)[9][9])) {
-  for (int i = 0; i < 9; i++) {
-    for (int j = 0; j < 9; j++) {
-      (*func)(i, j, array);
-    }
-  }
-}
-
-//TODO: make object oriented
 
 int main() {
-  int x[9][9];
-
-  // iterateAndApply(x);
+  Sudoku s = Sudoku();
+  s.iterateAndApply(testApply);
   return 0;
 }
