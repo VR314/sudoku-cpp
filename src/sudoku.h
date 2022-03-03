@@ -15,6 +15,7 @@ public:
   void iterateAndApply(apply_fn func);
   void fillWithZeroes();
   void inputFromFile(std::string filename);
+  bool checkIfSolved();
   const int SIZE = 9;
   Sudoku(::sudoku_board init) {
     std::copy(&init[0][0], &init[0][0] + 9 * 9, &board[0][0]);
