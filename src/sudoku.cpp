@@ -2,7 +2,10 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <queue>
+#include <set>
 #include <vector>
+
 using namespace std;
 
 void Sudoku::printBoard() {
@@ -67,6 +70,7 @@ bool unsolved(vector<int> v) {
 }
 
 // check rows, columns, and squares
+// TODO: optimize: check if sum of r, c, s is 45
 bool Sudoku::checkIfSolved() {
   vector<int> horiz{};
   vector<int> vert{};
@@ -107,7 +111,7 @@ bool Sudoku::checkIfSolved() {
         return false;
       } else if (std::adjacent_find(square.begin(), square.end()) !=
                  square.end()) {
-        cerr << "DUPLICATE IN SQUARE" << endl;
+        cerr << "DUPLICATE" << endl;
         for (int x : square) {
           cerr << x;
         }
@@ -117,7 +121,70 @@ bool Sudoku::checkIfSolved() {
       square = {};
     }
   }
-  
+
   cerr << "SOLVED SUDOKU" << endl;
+  return true;
+}
+
+bool Sudoku::recursiveBacktrack(int index) {
+  if (index == 80) {
+    // printBoard();
+    return checkIfSolved();
+  }
+
+  set<int> found{};
+  for (int i = 0; i < 9; i++) {
+    found.insert(board[index / 9][i]);
+    found.insert(board[i][index % 9]);
+  }
+
+  int i = index / 3 * 3;
+  int j = (index % 9) / 3 * 3;
+  found.insert(board[i][j]);
+  found.insert(board[i + 1][j]);
+  found.insert(board[i + 2][j]);
+  found.insert(board[i][j + 1]);
+  found.insert(board[i + 1][j + 1]);
+  found.insert(board[i + 2][j + 1]);
+  found.insert(board[i][j + 2]);
+  found.insert(board[i + 1][j + 2]);
+  found.insert(board[i + 2][j + 2]);
+
+  queue<int> poss{};
+  for (int i = 1; i <= 9; i++) {
+    if (found.find(i) == found.end()) {
+      poss.push(i);
+    }
+  }
+
+  /*
+    if (index >= 79) {
+      int &result = poss.front();
+      board[index / 9][index % 9] = result;
+      poss.pop();
+      printBoard();
+      if (checkIfSolved()) {
+        printBoard();
+        return true;
+      } else {
+        return false;
+      }
+    }
+    */
+
+  if (board[index / 9][index % 9] != 0) {
+    recursiveBacktrack(index + 1);
+  }
+
+  do {
+    if(poss.empty()) {
+      return false;
+    }
+    cout << "index: " << index << endl;
+    int &result = poss.front();
+    board[index / 9][index % 9] = result;
+    poss.pop();
+  } while (!recursiveBacktrack(index + 1));
+
   return true;
 }

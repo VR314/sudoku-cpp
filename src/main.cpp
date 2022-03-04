@@ -15,10 +15,11 @@ void clearConsole() {
   printf("\033c");
 }
 
+
+//TODO: implement recursive backtracking
 int main() {
   Sudoku s = Sudoku("sudokus/test.in");
-  clearConsole();
   s.printBoard();
-  s.checkIfSolved();
+  s.recursiveBacktrack(0);
   return 0;
 }
